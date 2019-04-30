@@ -1,37 +1,35 @@
 #!/bin/sh
 
 # Variables
-log_file_cloud="PATH" #ENTER HERE FULL PATH e.g. /home/pi/DNSUpdater/logs/cloudflare.log
-log_file_dir="PATH_TO_LOG_DIRECTORY" #ENTER HERE FULL PATH TO LOG DIRECTORY e.g. /home/pi/DNSUpdater/logs/
-ip_file="PATH_TO_IP_FILE" #ENTER HERE FULL PATH TO LOG DIRECTORY e.g. /home/pi/DNSUpdater/ip.tkt
+Path="/home/pi/DNSUpdater" #ENTER HERE FULL PATH e.g. /home/pi/DNSUpdater
 SUBJ="IP_Changed" #EMail Subject
 EMAIL="ENTER YOUR EMAIL ADDRESS HERE" #Email Address to send notification
 
 check_internet() {
-  bash /home/pi/DNSUpdater/check_internet.sh #CHANGE TO Actual Path
+  bash "${Path}/check_internet.sh" "${Path}"
 }
 
 update_cf() {
-  bash /home/pi/DNSUpdater/cloudflare.sh #CHANGE TO Actual Path
+  bash "${Path}/cloudflare.sh" "${Path}"
 }
 
 log() {
         if [ "$2" ]; then
-                echo $(echo "[$(date)] - $1" >> "$log_file_dir$2.log")
+                echo $(echo "[$(date)] - $1" >> "${Path}/logs/$2.log")
                 return
         fi
         if [ "$1" ]; then
-                echo "[$(date)] - $1" >> $log_file_cloud
+                echo "[$(date)] - $1" >> "${Path}/logs/cloudflare.log"
                 return
         fi
 }
 
 ip1=""
 ip2=""
-echo "\n" >> $log_file_cloud
+echo "\n" >> "${Path}/logs/cloudflare.log"
 localip=$(ip addr show eth0 | grep 'inet' | awk '{print $2}' | cut -f1 -d'/' | head -n 1)
 
-read ip1 < $ip_file
+read ip1 < "${Path}/ip.txt"
 ip2=$(wget -qO- ifconfig.me/ip)
 rip="$ip2"
 log "IP Checker script is running"
