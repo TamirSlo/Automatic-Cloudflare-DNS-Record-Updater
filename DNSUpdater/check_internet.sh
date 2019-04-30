@@ -1,8 +1,10 @@
 #!/bin/bash
 
+Path=$1
+
 log() {
         if [ "$1" ]; then
-                echo "[$(date)] - $1" >> /home/pi/DNSUpdater/logs/cloudflare.log #Change to Actual Path
+                echo "[$(date)] - $1" >> "${Path}/logs/cloudflare.log"
         fi
 }
 ifonline() {
@@ -27,5 +29,5 @@ do
         sudo service networking restart
 done
 log "Internet connection cannot be restored. Restarting machine."
-echo "[$(date)] - Machine restarting - No interent connectivity" >> /home/pi/DNSUpdater/logs/error.log #Change to Actual Path
+echo "[$(date)] - Machine restarting - No interent connectivity" >> "${Path}/logs/error.log"
 sudo reboot
