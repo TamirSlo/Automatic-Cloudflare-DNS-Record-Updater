@@ -1,0 +1,15 @@
+{
+  "name": "automatic-cloudflare-dns-record-updater",
+  "version": "1.0.0",
+  "description": "With this simple script you can automatically update your router's IP for all/some zones on your Cloudflare account.\r Simply copy the \"DNSUpdater\" folder onto your linux based computer and make sure the config file is edited appropriatley!\r Then add a cron job with a link to the '..path..'\\DNSUpdater\\index.js and execute it automatically. The script will check for any changes to your IP address and will notify you by email or with our soon to be cPanel-like domain manager service for ARM based computers!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cloudflare": "^2.9.1",
+    "nodemailer": "^6.9.3"
+  }
+}
