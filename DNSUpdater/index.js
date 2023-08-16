@@ -22,7 +22,7 @@ let ip2 = ""
 let localip = execSync('ip addr show eth0 | grep \'inet\' | awk \'{print $2}\' | cut -f1 -d\'/\' | head -n 1');
 ( async () => {
     ip1 = fs.readFileSync(`${Path}/ip.txt`, 'utf8');
-    ip2 = await ( await fetch('https://ifconfig.me/ip' ) ).text();
+    ip2 = await ( await fetch('https://ip4only.me/ip/' ) ).text();
     let rip = ip2
     log("IP Checker script is running")
 
