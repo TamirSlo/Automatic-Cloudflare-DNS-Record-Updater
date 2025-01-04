@@ -3,6 +3,9 @@ const fs = require('node:fs');
 // Change these
 const AUTH_EMAIL = ""; // Cloudflare email address
 const AUTH_KEY = ""; // Cloudflare API key
+const FILTER_ACCOUNTS = [
+    
+] // Add an array of account ID's to change DNS for.
 
 const api = require('cloudflare')({
     email: AUTH_EMAIL,
@@ -17,9 +20,15 @@ async function updateCloudflare(path, newIP) {
     try {
         const zones = await api.zones.browse()
 
-
         for (let i = 0; i < zones.result.length; i++) {
             const zone = zones.result[i];
+
+            if(FILTER_ACCOUNTS.length > 0){
+                if(!FILTER_ACCOUNTS.find((account) => account == zone.account.id)){
+                    log(path, `Skipping zone ${zone.name} due to account filtering.`);
+                    continue;
+                }
+            }
 
             try {
                 const dns_records = await api.dnsRecords.browse(zone.id)

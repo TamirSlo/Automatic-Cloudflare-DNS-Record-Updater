@@ -3,11 +3,15 @@ With this simple script you can automatically update your router's IP for all/so
 Simply copy the "DNSUpdater" folder onto your linux based computer and make sure the config file is edited appropriatley!
 Then add a cron job with a link to the '..path..'\DNSUpdater\index.js and execute it automatically. The script will check for any changes to your IP address and will notify you by email or with our soon to be cPanel-like domain manager service for ARM based computers!
 
+## Dependencies
+The commands `ping` and `ip` are used in the script, if they are not installed on your distribution by default, please install them using `apt install -y iputils-ping iproute2`
+
 ## How to install?
 1. Simply download the files and make sure to change the Path variable at the start of main.sh
 2. Ensure the Logs folder is created as 'logs' (Manual Process) as shown in the file structure.
-3. Write down your Cloudflare EMail and API Key inside cloudflare.sh
-4. Add a cron job:
+3. Create the `ip.txt` file in DNSUpdater with your current IPv4 Address.
+4. Write down your Cloudflare EMail and API Key inside cloudflare.sh
+5. Add a cron job:
   - In shell type in the following command: `crontab -e`
   - Then add the following line: `*/15 * * * * node /root/DNSUpdater/index.js` and the script will be executed every 15 minutes.
   - Make sure you change the path in the above line to fit your case.
